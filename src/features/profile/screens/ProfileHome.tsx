@@ -153,7 +153,7 @@ export function ProfileHome() {
                 <Film color="var(--color-primary)" size={24} />
               </div>
               <div>
-                <span style={{ fontSize: '24px', fontWeight: 'bold' }}>{stats?.moviesWatched || 0}</span>
+                <span style={{ fontSize: '24px', fontWeight: 'bold' }}>{stats?.total_movies || 0}</span>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '14px' }}>Filmes Assistidos</p>
               </div>
             </div>
@@ -164,7 +164,7 @@ export function ProfileHome() {
               </div>
               <div style={{ flex: 1 }}>
                 <span style={{ fontSize: '18px', fontWeight: 'bold', lineHeight: 1.2, display: 'block', marginBottom: '4px' }}>
-                  {formatWatchTime(stats?.watchTimeMinutes || 0)}
+                  {formatWatchTime(stats?.total_minutes || 0)}
                 </span>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '14px', margin: 0 }}>Tempo de Tela</p>
               </div>

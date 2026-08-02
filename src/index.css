@@ -173,6 +173,18 @@ button {
   .responsive-row {
     flex-direction: column !important;
   }
+
+  .inbox-sidebar {
+    width: 100% !important;
+  }
+
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  .mobile-only-btn {
+    display: flex !important;
+  }
 }
 
 @media (min-width: 769px) {
@@ -184,4 +196,9 @@ button {
     flex-direction: row;
   }
 }
+
+.mobile-only-btn {
+  display: none;
+}
+
 

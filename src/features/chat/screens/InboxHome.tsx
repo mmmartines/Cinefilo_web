@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, MessageSquare, Users, Sparkles, Send } from 'lucide-react';
+import { Search, MessageSquare, Users, Sparkles, Send, ArrowLeft } from 'lucide-react';
 import { supabase } from '../../../services/supabase';
 import { database } from '../../../services/database';
 import { useNavigate } from 'react-router-dom';
@@ -47,9 +47,6 @@ export function InboxHome() {
       setCurrentUser(session.user);
       const rooms = await database.getChats();
       setChatRooms(rooms || []);
-      if (rooms && rooms.length > 0) {
-        setActiveChat(rooms[0]);
-      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -96,11 +93,12 @@ export function InboxHome() {
         subtitle="Converse sobre os últimos lançamentos."
       />
 
-      <div style={{ display: 'flex', flex: 1, gap: '24px', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         {/* Lista de Fóruns */}
-        <div style={{ width: '400px', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto' }}>
-          {loadingRooms ? (
+        {!activeChat && (
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', overflowY: 'auto' }}>
+            {loadingRooms ? (
              <div style={{ textAlign: 'center', padding: '32px', color: 'var(--color-text-muted)' }}>Carregando salas...</div>
           ) : chatRooms.length === 0 ? (
              <div style={{ textAlign: 'center', padding: '32px', color: 'var(--color-text-muted)' }}>Nenhum fórum disponível.</div>
@@ -127,16 +125,22 @@ export function InboxHome() {
                 </p>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+            ))}
+            </div>
+          </div>
+        )}
 
-      {/* Área do Chat Aberto */}
-      <div className="glass-panel" style={{ flex: 1, borderRadius: '24px', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        {activeChat ? (
-          <>
+        {/* Área do Chat Aberto */}
+        {activeChat && (
+          <div className="glass-panel" style={{ flex: 1, borderRadius: '24px', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             {/* Header do Chat */}
             <div style={{ padding: '24px', borderBottom: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', gap: '16px', background: 'rgba(0,0,0,0.5)' }}>
+              <button 
+                onClick={() => setActiveChat(null)} 
+                style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', padding: '8px', marginRight: '8px' }}
+              >
+                <ArrowLeft size={24} />
+              </button>
               <img src={`https://image.tmdb.org/t/p/w200${activeChat.movie_poster}`} alt={activeChat.movie_title} style={{ width: '48px', height: '70px', borderRadius: '8px' }} />
               <div>
                 <h3 style={{ fontSize: '20px', fontWeight: 'bold' }}>Chat Oficial: {activeChat.movie_title}</h3>
@@ -185,14 +189,8 @@ export function InboxHome() {
                 <Send size={20} />
               </button>
             </div>
-          </>
-        ) : (
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-muted)' }}>
-            <MessageSquare size={64} style={{ marginBottom: '16px', opacity: 0.5 }} />
-            <h2 style={{ fontSize: '24px' }}>Selecione um fórum para conversar</h2>
           </div>
         )}
-      </div>
       </div>
     </div>
   );

@@ -45,8 +45,8 @@ export function CatalogHome() {
         const stats = await database.getUserStats(session.user.id);
         if (stats) {
           setUserStats({
-            watched: stats.watched?.map((m: any) => m.movieId || m.id) || [],
-            watchlist: stats.watchlist?.map((m: any) => m.movieId || m.id) || []
+            watched: stats.watched || [],
+            watchlist: stats.watchlist || []
           });
         }
       }

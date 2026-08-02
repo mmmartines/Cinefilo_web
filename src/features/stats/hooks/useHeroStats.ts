@@ -69,10 +69,10 @@ export function useHeroStats() {
         const stats = await database.getUserStats(session.user.id);
         if (!stats) return;
 
-        const watchedList = stats.watched || [];
+        const watchedList = fullList.filter((m: any) => m.status === 'watched');
         setTotalMoviesWatched(watchedList.length);
         
-        const minutes = stats.watchTimeMinutes || watchedList.reduce((acc: number, movie: any) => acc + (movie.runtime || 0), 0);
+        const minutes = stats.total_minutes || watchedList.reduce((acc: number, movie: any) => acc + (movie.runtime || 0), 0);
         setTotalMinutesWatched(minutes);
 
         const genreCounts: Record<string, number> = {};

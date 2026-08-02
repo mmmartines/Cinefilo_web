@@ -143,12 +143,6 @@ export function SettingsHome() {
         subtitle="Gerencie sua conta e aplicativo."
         showBackButton={true}
         onBack={() => navigate('/profile')}
-        rightElement={
-          <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: '#FAFAFA', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span>Sair</span>
-            <LogOut size={20} />
-          </button>
-        }
       />
 
       <div style={{ background: 'var(--color-bg-element)', borderRadius: '16px', padding: '24px', border: '1px solid var(--color-border)', marginBottom: '32px' }}>
